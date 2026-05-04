@@ -1,0 +1,46 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_vendas
+    ports:
+      - '1433:1433'
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong@Pass123
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  mssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    container_name: sqlserver_init
+    depends_on:
+      - sqlserver
+    volumes:
+      - ./sql/init.sql:/tmp/init.sql
+      - ./sql/init-db.sh:/tmp/init-db.sh
+    command: /bin/bash /tmp/init-db.sh
+
+  adminer:
+    image: adminer
+    container_name: sqlserver_admin
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - sqlserver
+
+  api:
+    build: ./api
+    container_name: sales_api
+    ports:
+      - '3000:3000'
+    environment:
+      - DB_USER=sa
+      - DB_PASSWORD=YourStrong@Pass123
+      - DB_SERVER=sqlserver
+      - DB_NAME=SistemaVendas
+    depends_on:
+      - sqlserver
+
+volumes:
+  sql_data:
