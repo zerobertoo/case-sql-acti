@@ -1,6 +1,6 @@
 # Sistema de Gestão de Pedidos de Venda
 
-Um sistema production-ready completo de gestão de pedidos implementado em **SQL Server 2022** com **API REST** em Node.js/Express. Demonstra boas práticas de engenharia de software incluindo transações atômicas, validações robustas, integridade referencial e cobertura de testes automatizados.
+Um sistema completo de gestão de pedidos implementado em **SQL Server 2022** com **API REST** em Node.js/Express. Demonstra boas práticas de engenharia de software incluindo transações atômicas, validações robustas, integridade referencial e cobertura de testes automatizados.
 
 ## Visão Geral
 

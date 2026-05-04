@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci
+# O correto seria usar `npm ci`, mas para facilitar usaremos `npm install` aqui.
+RUN npm install
 
 COPY . .
 
