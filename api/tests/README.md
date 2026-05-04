@@ -3,6 +3,7 @@
 ## 🚀 Como Executar os Testes
 
 ### Pré-requisitos
+
 1. Docker e Docker Compose iniciados
 2. Containers rodando: `docker-compose up -d`
 3. Aguarde ~30-40 segundos para o banco inicializar
@@ -31,19 +32,22 @@ npm test -- --coverage
 O suite de testes inclui **23 casos de teste** cobrindo:
 
 ### ✅ Testes de Clientes
+
 - `GET /clientes` - Listar todos
 - `GET /clientes/:id` - Obter específico
 - `POST /clientes` - Criar novo
 - Validações de campo obrigatório
 - Validação de CPF/CNPJ duplicado
 
-### ✅ Testes de Produtos  
+### ✅ Testes de Produtos
+
 - `GET /produtos` - Listar todos
 - `POST /produtos` - Criar novo
 - Validação de preço negativo
 - Proteção referencial (não deletar com itens)
 
 ### ✅ Testes de Pedidos (Destaque!)
+
 - `POST /pedidos` com itens integrados
   - Cria pedido + itens em transação atômica
   - Retorna quantidade de itens inseridos
@@ -56,16 +60,19 @@ O suite de testes inclui **23 casos de teste** cobrindo:
 - Permissão de criar pedido sem itens
 
 ### ✅ Testes de Itens
+
 - `GET /itens` - Listar todos
 - `GET /pedidos/:id/itens` - Itens de um pedido
 - `POST /itens` - Criar item manual
 
 ### ✅ Testes de Integração de Estoque
+
 - `POST /pedidos/:id/concluir` - Conclui e atualiza estoque
 - Verifica se estoque diminuiu corretamente
 - Previne conclusão dupla de pedido
 
 ### ✅ Testes de Integridade Referencial
+
 - Não deletar cliente com pedidos
 - Não deletar produto com itens
 - Validações de FK funcionando
@@ -98,7 +105,9 @@ Tests:       23 passed, 23 total
 ## 🎯 Casos de Teste Críticos
 
 ### 1. Fluxo Integrado de Pedidos
+
 Testa a criação de um pedido com 2 itens em uma única requisição:
+
 ```javascript
 POST /pedidos
 {
@@ -109,10 +118,13 @@ POST /pedidos
   ]
 }
 ```
+
 ✅ Resultado: `201 Created` com `items_inseridos: 2`
 
 ### 2. Rollback Automático
+
 Testa se o pedido é deletado quando um item falha:
+
 ```javascript
 POST /pedidos
 {
@@ -123,10 +135,13 @@ POST /pedidos
   ]
 }
 ```
+
 ✅ Resultado: `400 Bad Request` e pedido é automaticamente deletado
 
 ### 3. Integração de Estoque
+
 Testa se estoque é atualizado ao concluir pedido:
+
 - Obter estoque inicial do produto
 - Criar pedido com itens
 - Concluir pedido
@@ -141,7 +156,6 @@ Testa se estoque é atualizado ao concluir pedido:
 3. **Se os testes falharem**:
    - Verifique se containers estão rodando: `docker-compose ps`
    - Verifique se banco está inicializado: `docker logs sqlserver_init`
-   - Aumente o timeout: `npm test -- --testTimeout=60000`
 
 4. **Para Debugar um Teste Específico**:
    ```bash
@@ -151,6 +165,7 @@ Testa se estoque é atualizado ao concluir pedido:
 ## ✅ Validação Completa do Sistema
 
 Execute os testes para validar o sistema completo:
+
 ```bash
 docker-compose up -d
 cd api && npm install
@@ -158,6 +173,7 @@ npm test
 ```
 
 Valida que:
+
 - ✅ Todo o projeto está funcional
 - ✅ Validações estão implementadas corretamente
 - ✅ Transações são atômicas e seguras

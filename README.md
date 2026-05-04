@@ -161,12 +161,21 @@ DELETE /itens/{id}            → Remove item
 
 ### Esquema Relacional
 
+![Diagrama do sistema](./diagram.png)
+
+Caso a imagem acima não carregue, aqui está uma versão alternativa:
+
 ```
-Cliente (1) ────→ (N) PedidoVenda
-                    ↓
-                    (N) ItemPedido ←──→ (N) Produto
-                    ↓
-            MovimentacaoEstoque
+Cliente (1) ───────────────┐
+                           │
+                           ▼
+                    PedidoVenda (N)
+                           │
+                           ▼
+                    ItemPedido (N) ───────► Produto (N)
+                           │
+                           ▼
+                 MovimentacaoEstoque
 ```
 
 ### Tabelas

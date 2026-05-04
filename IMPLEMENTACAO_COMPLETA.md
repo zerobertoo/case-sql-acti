@@ -7,31 +7,37 @@ Documentação técnica completa do sistema de pedidos de venda implementado em 
 Todos os requisitos do desafio foram superados com implementação em nível production:
 
 ✅ **Modelagem Relacional Correta**
+
 - 5 tabelas relacionadas: Cliente, Produto, PedidoVenda, ItemPedido, MovimentacaoEstoque
 - Chaves primárias e estrangeiras apropriadas em todas as tabelas
 - Relacionamentos N:N corretamente implementados
 
 ✅ **CRUD Completo**
+
 - Procedures `insert`, `update`, `delete`, `select` para cada tabela
 - Validações em múltiplas camadas (API + banco de dados)
 - Tratamento robusto de erros com TRY...CATCH
 
 ✅ **Fluxo Integrado de Pedidos**
+
 - Criação de pedido + itens em uma única requisição
 - Transação atômica (tudo cria ou nada cria)
 - Rollback automático em caso de falha
 
 ✅ **Integração de Estoque**
+
 - Procedure `sp_concluir_venda` em transação
 - Movimentação de estoque com auditoria completa
 - Atualização automática de quantidades
 
 ✅ **Integridade Referencial**
+
 - Impede exclusão de clientes/produtos com pedidos ativos
 - Validações de relacionamentos antes de operações críticas
 - Constraints de chave estrangeira implementadas
 
 ✅ **API REST Production-Ready**
+
 - Todos os endpoints documentados em Swagger/OpenAPI
 - Testes automáticos de validação
 - Respostas estruturadas e erros descritivos
@@ -60,8 +66,8 @@ Todos os requisitos do desafio foram superados com implementação em nível pro
 
 ### Item do Pedido
 
-| Procedure               | Descrição                                          |f
-| :---------------------- | :------------------------------------------------- |
+| Procedure               | Descrição                                          | f   |
+| :---------------------- | :------------------------------------------------- | --- |
 | `sp_item_pedido_insert` | Insere item ao pedido com validação de referências |
 | `sp_item_pedido_update` | Atualiza quantidade e valor do item                |
 | `sp_item_pedido_delete` | Deleta item do pedido                              |
@@ -137,6 +143,7 @@ POST /pedidos
 ```
 
 **Características:**
+
 - ✅ Transação atômica: tudo é criado ou nada é criado
 - ✅ Validação em cascata: cliente, produtos e referências
 - ✅ Rollback automático: se um item falhar, o pedido é deletado
@@ -246,6 +253,7 @@ curl -X POST http://localhost:3000/pedidos \
 ```
 
 **Resposta (Sucesso):**
+
 ```json
 {
   "id_pedido": 2,
@@ -276,6 +284,7 @@ curl -X POST http://localhost:3000/pedidos/2/concluir
 ```
 
 **Resultado:** O pedido é marcado como "Concluido" e o estoque é automaticamente atualizado:
+
 - Notebook: 10 - 2 = 8
 - Mouse: 50 - 1 = 49
 
@@ -320,7 +329,7 @@ project/
 - **Containerização**: Docker + Docker Compose
 - **Dependências Node**: mssql, express, swagger-ui-express, swagger-jsdoc, cors, dotenv
 
-## 🎯 Diferenciais Implementados (Além do Requisito)
+## 🎯 Diferenciais Implementados
 
 - ✨ **Fluxo Integrado de Pedidos**: Criação de pedido + itens em transação atômica
 - ✨ **Rollback Inteligente**: Falha em um item deleta o pedido inteiro (sem órfãos)
@@ -337,6 +346,7 @@ project/
 O sistema foi testado com os seguintes cenários:
 
 ### Validações Funcionando
+
 ```bash
 # ❌ Cliente inválido
 curl -X POST http://localhost:3000/pedidos \
@@ -358,6 +368,7 @@ curl -X POST http://localhost:3000/pedidos \
 ```
 
 ### Integração de Estoque Verificada
+
 ```
 Antes de concluir pedido:
 - Produto A: 100 unidades
@@ -369,6 +380,7 @@ Após criar pedido com 5 do Produto A e 3 do Produto B e concluir:
 ```
 
 ### Transação Atômica Comprovada
+
 - Se um item falha durante insert, todo o pedido é deletado (sem pedidos órfãos)
 - Todos os itens válidos são inseridos ou nenhum é
 - Estoque só é atualizado após pedido estar concluído
@@ -404,7 +416,7 @@ Após criar pedido com 5 do Produto A e 3 do Produto B e concluir:
    - Senha: `YourStrong@Pass123`
    - Banco: `SistemaVendas`
 
-3. **Interface Swagger Interativa**: 
+3. **Interface Swagger Interativa**:
    - Acesse http://localhost:3000/api-docs
    - Teste todos os endpoints diretamente na interface
    - Inclui documentação de request/response
