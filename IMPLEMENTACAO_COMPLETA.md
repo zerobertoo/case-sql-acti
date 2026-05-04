@@ -66,8 +66,8 @@ Todos os requisitos do desafio foram superados com implementação em nível pro
 
 ### Item do Pedido
 
-| Procedure               | Descrição                                          | f   |
-| :---------------------- | :------------------------------------------------- | --- |
+| Procedure               | Descrição                                          |
+| :---------------------- | :------------------------------------------------- |
 | `sp_item_pedido_insert` | Insere item ao pedido com validação de referências |
 | `sp_item_pedido_update` | Atualiza quantidade e valor do item                |
 | `sp_item_pedido_delete` | Deleta item do pedido                              |
